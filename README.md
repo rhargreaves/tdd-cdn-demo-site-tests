@@ -1,4 +1,4 @@
-# Outside-In CDN Acceptance Test Suite
+# Outside-In CDN Acceptance Test Suite [![build status](https://travis-ci.org/rhargreaves/spa-demo-test-suite.svg)](https://travis-ci.org/rhargreaves/spa-demo-test-suite)
 
 ## Installation
 
