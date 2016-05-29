@@ -4,30 +4,41 @@ require 'json'
 
 describe "Given I am a website user", :type => :feature do
 
-  before do
-    Capybara.current_driver = :selenium
-    @site_url = "http://robh-spa-2016-demo-site.eu-west-1.elasticbeanstalk.com/"
-  end
+  ['http://robh-spa-2016-demo-site.eu-west-1.elasticbeanstalk.com/',
+   'http://spa2016.roberthargreaves.net.global.prod.fastly.net/'].each do |url|
 
-  it 'loads the page' do
-    visit @site_url
-    expect(page).to have_content 'Clouds'
-  end
+    context 'url is ' + url do
 
-  it 'loads the page fully in under 5 seconds' do
-    stopwatch = Stopwatch.new
-    visit @site_url
-    expect(stopwatch.elapsed_time).to be < 5
-  end
+      before do
+        Capybara.current_driver = :selenium
+        @site_url = url
+      end
 
-  it 'has up-to-date counter' do
-    api_counter_value = get_counter_value_from_api
-    page_counter_value = get_counter_value_from_page
-    expect(page_counter_value).to be >= api_counter_value
+      it 'loads the page' do
+        visit @site_url
+        expect(page).to have_content 'Clouds'
+      end
+
+      it 'loads the page fully in under 5 seconds' do
+        stopwatch = Stopwatch.new
+        visit @site_url
+        expect(stopwatch.elapsed_time).to be < 5
+      end
+
+      it 'has up-to-date counter' do
+        api_counter_value = get_counter_value_from_api
+        page_counter_value = get_counter_value_from_page
+        puts "API counter is #{api_counter_value}, Page is #{page_counter_value}"
+        expect(page_counter_value).to be >= api_counter_value
+      end
+
+    end
+
   end
 
   def get_counter_value_from_api
-    uri = URI(@site_url + 'counter')
+    api_url = 'http://robh-spa-2016-demo-site.eu-west-1.elasticbeanstalk.com/'
+    uri = URI(api_url + 'counter')
     response = Net::HTTP.get(uri)
     data = JSON.parse(response)
     val = data["value"]
