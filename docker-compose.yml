@@ -5,10 +5,16 @@ services:
     container_name: firefox
     ports:
       - "4444:4444"
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
   tests:
     build: .
     container_name: tests
     command: rspec
     links:
       - firefox
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
 
