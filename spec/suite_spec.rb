@@ -10,8 +10,19 @@ describe "Given I am a website user", :type => :feature do
     context 'url is ' + url do
 
       before do
-        Capybara.current_driver = :selenium
+        selenium_url = 'http://127.0.0.1:4444/wd/hub'
+        Capybara.run_server = false
+        Capybara.register_driver :remote_browser do |app|
+          Capybara::Selenium::Driver.new(
+            app,
+            :browser => :remote,
+            url: selenium_url,
+            desired_capabilities: capabilities
+          )
+        end
         @site_url = url
+        Capybara.default_driver = :remote_browser
+        Capybara.javascript_driver = :remote_browser
       end
 
       it 'loads the page' do

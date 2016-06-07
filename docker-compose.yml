@@ -1,10 +1,10 @@
-version: '1'
+version: '2'
 services:
   selenium:
     image: selenium/standalone-firefox
   tests:
     build: .
     command: rspec
-    links:
+    depends_on:
       - selenium
 
