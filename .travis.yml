@@ -1,17 +1,20 @@
 sudo: required
 services:
-  - docker
+	- docker
 
 env:
-  COMPOSE_VERSION: 1.7.1
+	global:
+		- COMPOSE_VERSION=1.7.1
+		- DOCKER_VERSION=1.10.1-0-trusty
 
 before_install:
+	- sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=${DOCKER_VERSION}
  - curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
  - chmod +x docker-compose
  - sudo mv docker-compose /usr/local/bin
 
 script:
-  - docker version
-  - docker-compose version
-  - docker-compose build
-  - docker-compose run tests
+	- docker version
+	- docker-compose version
+	- docker-compose build
+	- docker-compose run tests
