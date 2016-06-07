@@ -1,0 +1,10 @@
+version: '1'
+services:
+  selenium:
+    image: selenium/standalone-firefox
+  tests:
+    build: .
+    command: rspec
+    links:
+      - selenium
+
