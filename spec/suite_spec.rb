@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'net/http'
 require 'json'
+require 'selenium-webdriver'
 
 describe "Given I am a website user", :type => :feature do
 
@@ -10,14 +11,14 @@ describe "Given I am a website user", :type => :feature do
     context 'url is ' + url do
 
       before do
-        selenium_url = 'http://127.0.0.1:4444/wd/hub'
+        selenium_url = 'http://firefox:4444/wd/hub'
         Capybara.run_server = false
         Capybara.register_driver :remote_browser do |app|
           Capybara::Selenium::Driver.new(
             app,
             :browser => :remote,
             url: selenium_url,
-            desired_capabilities: capabilities
+            desired_capabilities: Selenium::WebDriver::Remote::Capabilities.firefox
           )
         end
         @site_url = url

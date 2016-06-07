@@ -1,10 +1,14 @@
 version: '2'
 services:
-  selenium:
+  firefox:
     image: selenium/standalone-firefox
+    container_name: firefox
+    ports:
+      - "4444:4444"
   tests:
     build: .
+    container_name: tests
     command: rspec
-    depends_on:
-      - selenium
+    links:
+      - firefox
 
