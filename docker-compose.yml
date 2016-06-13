@@ -1,8 +1,8 @@
 version: '2'
 services:
-  firefox:
-    image: selenium/standalone-firefox
-    container_name: firefox
+  browser:
+    image: selenium/standalone-chrome
+    container_name: browser
     ports:
       - "4444:4444"
     dns:
@@ -13,7 +13,7 @@ services:
     container_name: tests
     command: rspec
     links:
-      - firefox
+      - browser
     dns:
       - 8.8.8.8
       - 8.8.4.4

@@ -11,14 +11,14 @@ describe "Given I am a website user", :type => :feature do
     context 'url is ' + url do
 
       before do
-        selenium_url = 'http://firefox:4444/wd/hub'
+        selenium_url = 'http://browser:4444/wd/hub'
         Capybara.run_server = false
         Capybara.register_driver :remote_browser do |app|
           Capybara::Selenium::Driver.new(
             app,
             :browser => :remote,
             url: selenium_url,
-            desired_capabilities: Selenium::WebDriver::Remote::Capabilities.firefox
+            desired_capabilities: Selenium::WebDriver::Remote::Capabilities.chrome
           )
         end
         @site_url = url
@@ -28,13 +28,13 @@ describe "Given I am a website user", :type => :feature do
 
       it 'loads the page' do
         visit @site_url
-        expect(page).to have_content 'Clouds'
+        expect(page).to have_content 'clouds'
       end
 
-      it 'loads the page fully in under 5 seconds' do
+      it 'loads the page fully in under 2 seconds' do
         stopwatch = Stopwatch.new
         visit @site_url
-        expect(stopwatch.elapsed_time).to be < 5
+        expect(stopwatch.elapsed_time).to be < 2
       end
 
       it 'has up-to-date counter' do
