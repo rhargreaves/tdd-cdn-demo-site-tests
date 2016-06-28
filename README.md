@@ -2,15 +2,11 @@
 
 ## Requirements
 
-Either:
-
 1. Docker
 2. Docker Compose
 
-Or:
-
-1. Ruby 2.3
-3. Selenium
+On Windows/OS X: Install Docker Toolbox - https://www.docker.com/products/docker-toolbox
+On Linux: Install Docker & Docker Compose - https://docs.docker.com/engine/installation/linux/
 
 ## Usage
 
