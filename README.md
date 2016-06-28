@@ -5,8 +5,8 @@
 1. Docker
 2. Docker Compose
 
-On Windows/OS X: Install Docker Toolbox - https://www.docker.com/products/docker-toolbox
-On Linux: Install Docker & Docker Compose - https://docs.docker.com/engine/installation/linux/
+* On Windows/OS X: Install Docker Toolbox - https://www.docker.com/products/docker-toolbox
+* On Linux: Install Docker & Docker Compose - https://docs.docker.com/engine/installation/linux/
 
 ## Usage
 
