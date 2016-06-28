@@ -21,13 +21,13 @@ $ docker-compose build
 $ docker-compose run tests
 ```
 
-If you run into trouble with tests failing as they cannot resolve internet addresses, run the following before running tests:
+#### Troubleshooting
 
-```
-$ docker-compose down
-```
+* If you are running Windows, `docker-compose run tests` will not work. Use `docker-compose up` and then press Ctrl+C when the test have ran. Use `docker-compose down` before attempting to run tests again.
 
-Or:
+* If you run into trouble with tests failing as they cannot resolve internet addresses, run `docker-compose down` before running tests
+
+####  Alternatively...
 
 Run the tests against Selenium manually (be sure to update the code to look at a local browser rather than the containerised Selenium instance)
 
