@@ -21,6 +21,8 @@ $ docker-compose build
 $ docker-compose run tests
 ```
 
+Be sure to re-run `docker-compose build` before running the tests after a change to the code.
+
 #### Troubleshooting
 
 * If you are running Windows, `docker-compose run tests` will not work. Use `docker-compose up` and then press Ctrl+C when the test have ran. Use `docker-compose down` before attempting to run tests again.
