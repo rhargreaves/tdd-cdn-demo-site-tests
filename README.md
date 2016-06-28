@@ -17,7 +17,14 @@ Or:
 Using Docker Compose:
 
 ```
+$ docker-compose build
 $ docker-compose run tests
+```
+
+If you run into trouble with tests failing as they cannot resolve internet addresses, run the following before running tests:
+
+```
+$ docker-compose down
 ```
 
 Or:
