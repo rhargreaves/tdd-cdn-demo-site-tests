@@ -2,8 +2,7 @@
 
 ## Requirements
 
-1. Docker
-2. Docker Compose
+Install Docker & Docker Compose
 
 * On Windows/OS X: Install Docker Toolbox - https://www.docker.com/products/docker-toolbox
 * On Linux: Install Docker & Docker Compose - https://docs.docker.com/engine/installation/linux/
@@ -27,7 +26,7 @@ Be sure to re-run `docker-compose build` before running the tests after a change
 
 ####  Alternatively...
 
-Run the tests against Selenium manually (be sure to update the code to look at a local browser rather than the containerised Selenium instance)
+Install Ruby 2.3 & Selenium and run the code using `rspec`. Be sure to update the code to look at a local browser rather than the containerised Selenium instance.
 
 
 
