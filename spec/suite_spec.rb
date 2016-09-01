@@ -14,8 +14,7 @@ module Tests
     entrypoints.each do |entrypoint|
 
       url = entrypoint[:url]
-
-      context "When hitting #{entrypoint[:name]}" do
+      context "When hitting #{entrypoint[:name]} URL" do
 
         before do
           selenium_url = 'http://browser:4444/wd/hub'
@@ -32,26 +31,24 @@ module Tests
           Capybara.javascript_driver = :remote_browser
         end
 
-        it 'loads the page' do
+        it 'loads the page', :loads => true do
           visit url
           expect(page).to have_content 'clouds'
         end
 
-        it 'loads the page fully in under 2 seconds' do
+        it 'loads the page fully in under 2 seconds', :perf => true do
           stopwatch = Stopwatch.new
           visit url
           expect(stopwatch.elapsed_time).to be < 2
         end
 
-        it 'has up-to-date counter' do
+        it 'has up-to-date counter', :counter => true do
           api_counter_value = get_counter_value_from_api origin_url
           page_counter_value = get_counter_value_from_page url
           puts "API counter is #{api_counter_value}, Page is #{page_counter_value}"
           expect(page_counter_value).to be >= api_counter_value
         end
-
       end
-
     end
 
     def get_counter_value_from_api(api_url)
