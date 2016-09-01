@@ -1,5 +1,13 @@
 require 'capybara/rspec'
 
+RSpec.configure do |config|
+
+  config.color = true
+  config.tty = true
+  config.formatter = :documentation
+end
+
+
 class Stopwatch
 
   def initialize()
