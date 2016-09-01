@@ -47,11 +47,11 @@ module Tests
           expect(stopwatch.elapsed_time).to be < 2
         end
 
-        it 'has up-to-date counter', :counter => true do
+        it 'page has up-to-date counter', :counter => true do
           api_counter_value = get_counter_value_from_api origin_url
           page_counter_value = get_counter_value_from_page url
-          puts "API counter is #{api_counter_value}, Page is #{page_counter_value}"
-          expect(page_counter_value).to be >= api_counter_value
+          expect(page_counter_value).to be >= api_counter_value, 
+            "Count on page (#{page_counter_value}) less than count from API (#{api_counter_value})"
         end
       end
     end
