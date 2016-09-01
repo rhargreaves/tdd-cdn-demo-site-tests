@@ -19,3 +19,6 @@ test-cdn-counter:
 
 test-cdn:
 	docker-compose run tests bash -c "DO_NOT_HIT_ORIGIN=1 rspec"
+
+help:
+	@grep '^[^#[:space:]].*:' Makefile
