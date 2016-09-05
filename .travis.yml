@@ -21,3 +21,5 @@ script:
   - docker-compose version
   - docker-compose build
   - docker-compose run tests
+notifications:
+    email: false
