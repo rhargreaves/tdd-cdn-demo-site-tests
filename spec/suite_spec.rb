@@ -11,7 +11,7 @@ module Tests
     entrypoints.push({ :name => 'the origin', :url => origin_url })
   end
   unless ENV['DO_NOT_HIT_CDN']
-    entrypoints.push({ :name => 'the CDN', :url => 'http://tdd-cdn-demo.roberthargreaves.net.global.prod.fastly.net/' })
+    entrypoints.push({ :name => 'the CDN', :url => 'http://tdd-cdn-demo-complete.roberthargreaves.net.global.prod.fastly.net/' })
   end
 
   describe "Given I am a site user", :type => :feature do
