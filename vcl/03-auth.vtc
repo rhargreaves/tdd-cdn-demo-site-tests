@@ -1,0 +1,49 @@
+varnishtest "Counter not cached"
+
+server s1 {
+	rxreq
+	expect req.url == "/protected/?key=secret1234"
+	txresp -status 302 -hdr "Location: http://protected_domain/protected/?key=internal_secret1234"
+} -start
+
+server s2 {
+	rxreq
+	expect req.url == "/protected/?key=internal_secret1234"
+	txresp -body "top secret foo"
+} -start
+
+varnish v1 -vcl+backend  {
+
+	sub vcl_recv {
+		if(req.restarts == 0) {
+			unset req.http.X-Authed;
+		}
+
+		if(!req.http.X-Authed) {
+			set req.backend = s1;
+			return (pass);
+		} else {
+			set req.backend = s2;
+			return (lookup);
+		}
+	}
+
+	sub vcl_deliver {
+
+		if(resp.status == 302 && resp.http.Location ~ "protected_domain") {
+			set req.http.X-Authed = "1";
+			set req.url = regsub(resp.http.Location,"^http://[^/]+(.*)","\1");
+			return(restart);
+		}
+
+	}
+
+} -start
+
+client c1 {
+	txreq -url "/protected/?key=secret1234"
+	rxresp
+	expect resp.body == "top secret foo"
+}
+
+client c1 -run
