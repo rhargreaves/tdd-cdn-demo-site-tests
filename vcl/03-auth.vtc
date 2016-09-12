@@ -1,18 +1,18 @@
-varnishtest "Counter not cached"
+varnishtest "Auth request and follow redirect"
 
-server s1 {
+server s_auth {
 	rxreq
-	expect req.url == "/protected/?key=secret1234"
-	txresp -status 302 -hdr "Location: http://protected_domain/protected/?key=internal_secret1234"
+	expect req.url == "/protected/?key=client_secret_key_1234"
+	txresp -status 302 -hdr "Location: http://protected_domain/content/?key=internal_secret_key_9876"
 } -start
 
-server s2 {
+server s_origin {
 	rxreq
-	expect req.url == "/protected/?key=internal_secret1234"
+	expect req.url == "/content/?key=internal_secret_key_9876"
 	txresp -body "top secret foo"
 } -start
 
-varnish v1 -vcl+backend  {
+varnish v1 -vcl+backend {
 
 	sub vcl_recv {
 		if(req.restarts == 0) {
@@ -20,28 +20,26 @@ varnish v1 -vcl+backend  {
 		}
 
 		if(!req.http.X-Authed) {
-			set req.backend = s1;
+			set req.backend = s_auth;
 			return (pass);
 		} else {
-			set req.backend = s2;
+			set req.backend = s_origin;
 			return (lookup);
 		}
 	}
 
 	sub vcl_deliver {
-
 		if(resp.status == 302 && resp.http.Location ~ "protected_domain") {
 			set req.http.X-Authed = "1";
 			set req.url = regsub(resp.http.Location,"^http://[^/]+(.*)","\1");
 			return(restart);
 		}
-
 	}
 
 } -start
 
 client c1 {
-	txreq -url "/protected/?key=secret1234"
+	txreq -url "/protected/?key=client_secret_key_1234"
 	rxresp
 	expect resp.body == "top secret foo"
 }
