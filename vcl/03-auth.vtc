@@ -1,3 +1,5 @@
+# NB: Requires Varnishtest 3.0 (see rhargreaves/varnishtest-3.0 docker image)
+
 varnishtest "Auth request and follow redirect"
 
 server s_auth {
