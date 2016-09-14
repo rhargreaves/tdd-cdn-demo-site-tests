@@ -1,0 +1,34 @@
+test "Counter not cached"
+
+server s1 {
+	rxreq
+	expect req.url == "/counter"
+	txresp -body "foo"
+
+	rxreq
+	expect req.url == "/counter"
+	txresp -body "barbaz"
+} -start
+
+varnish v1 -vcl+backend {
+	sub vcl_fetch {
+		if (req.url == "/counter") {
+			set beresp.ttl = 0s;
+		}
+	}
+} -start
+
+client c1 {
+	txreq -url "/counter"
+	rxresp
+	expect resp.bodylen == 3
+
+	txreq -url "/counter"
+	rxresp
+	expect resp.bodylen == 6
+}
+
+client c1 -run
+
+varnish v1 -expect cache_miss == 2
+varnish v1 -expect cache_hit == 0
