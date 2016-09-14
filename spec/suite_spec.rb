@@ -6,12 +6,14 @@ require 'selenium-webdriver'
 module Tests
 
   origin_url = 'http://robh-cdn-tdd-demo-site.eu-west-1.elasticbeanstalk.com/'
+  cdn_url = 'http://tdd-cdn-demo.roberthargreaves.net.global.prod.fastly.net/'
+
   entrypoints = []
   unless ENV['DO_NOT_HIT_ORIGIN']
     entrypoints.push({ :name => 'the origin', :url => origin_url })
   end
   unless ENV['DO_NOT_HIT_CDN']
-    entrypoints.push({ :name => 'the CDN', :url => 'http://tdd-cdn-demo.roberthargreaves.net.global.prod.fastly.net/' })
+    entrypoints.push({ :name => 'the CDN', :url => cdn_url })
   end
 
   describe "Given I am a site user", :type => :feature do
