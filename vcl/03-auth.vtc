@@ -34,7 +34,7 @@ varnish v1 -vcl+backend {
 		if(resp.status == 302 && resp.http.Location ~ "protected_domain") {
 			set req.http.X-Authed = "1";
 			set req.url = regsub(resp.http.Location,"^http://[^/]+(.*)","\1");
-			return(restart);
+			return (restart);
 		}
 	}
 
