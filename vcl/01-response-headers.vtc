@@ -1,4 +1,4 @@
-test "response header returned"
+test "Custom response header returned"
 
 server s1 {
 	rxreq
@@ -25,5 +25,3 @@ client c1 -run
 
 varnish v1 -expect cache_miss == 1
 varnish v1 -expect cache_hit == 0
-
-#server s1 -wait
