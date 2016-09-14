@@ -3,7 +3,7 @@ test "Backend server receives request"
 server s1 {
 	rxreq
 	expect req.url == "/foo"
-	txresp -body "Hello!"
+	txresp -body "Hello"
 } -start
 
 varnish v1 -vcl+backend {
@@ -13,7 +13,7 @@ varnish v1 -vcl+backend {
 client c1 {
 	txreq -url "/foo"
 	rxresp
-	expect resp.bodylen == 6
+	expect resp.bodylen == 5
 }
 
 client c1 -run
